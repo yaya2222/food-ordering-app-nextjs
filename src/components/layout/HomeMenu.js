@@ -1,11 +1,12 @@
 import Image from "next/image";
 import React from "react";
 import MenuIetm from "../menu/MenuIetm";
+import SectionHeaders from "./SectionHeaders";
 
 export default function HomeMenu() {
   return (
     <section>
-      <div className="absolute left-0 right-0 w-full h-full justify-start">
+      <div className="absolute left-0 right-0 w-full justify-start">
         <div className="absolute left-0 -top-[70px] -z-10">
           <Image src="/sallad1.png" alt="sallad" width={109} height={189} />
         </div>
@@ -14,10 +15,7 @@ export default function HomeMenu() {
         </div>
       </div>
       <div className="text-center mb-4">
-        <h3 className="uppercase text-gray-600 font-semibold leading-3">
-          Check out
-        </h3>
-        <h2 className="text-primary font-bold text-4xl italic">Menu</h2>
+      <SectionHeaders subHeader={"Check out"} mainHeader={"Menu"}/>
       </div>
       <div className="grid grid-cols-3 gap-4">
        <MenuIetm />
