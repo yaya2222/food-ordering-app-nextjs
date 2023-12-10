@@ -11,8 +11,8 @@ export default function LoginPage() {
     e.preventDefault()
     setLoginInProgress(true)
     // setUserCreated(false)
-  await signIn("credentials",{email,password})   
-    
+  const user = await signIn("credentials",{email,password})   
+  console.log(user);
     setLoginInProgress(false)
   }
 
