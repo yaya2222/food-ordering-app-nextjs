@@ -11,8 +11,7 @@ export default function LoginPage() {
     e.preventDefault()
     setLoginInProgress(true)
     // setUserCreated(false)
-  const user = await signIn("credentials",{email,password})   
-  console.log(user);
+    await signIn("credentials",{email,password,callbackUrl:"/"})   
     setLoginInProgress(false)
   }
 
@@ -24,7 +23,7 @@ export default function LoginPage() {
         <input type="password" placeholder="password" disabled={loginInProgress} value={password} onChange={e => setPassword(e.target.value)} />
         <button type='submit' disabled={loginInProgress}>Login</button>
         <div className="my-4 text-center text-gray-500">or login with provider</div>
-        <button className="flex gap-4 justify-center">
+        <button className="flex gap-4 justify-center" onClick={()=>signIn("google",{callbackUrl:"/"})}>
           <Image alt="" src="/google.png" width={24} height={24} />
           Login with google
         </button>

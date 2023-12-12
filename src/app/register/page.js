@@ -42,7 +42,7 @@ export default function RegisterPage() {
         <input type="password" placeholder="password" disabled={creatingUser} value={password} onChange={e => setPassword(e.target.value)} />
         <button type="submit" disabled={creatingUser}>Register</button>
         <div className="my-4 text-center text-gray-500">or login with provider</div>
-        <button className="flex gap-4 justify-center">
+        <button className="flex gap-4 justify-center" onClick={()=>signIn("google",{callbackUrl:"/"})}>
           <Image alt="" src="/google.png" width={24} height={24} />
           Login with google
         </button>
