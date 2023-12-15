@@ -4,12 +4,15 @@ import { User } from "@/models/User"
 import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 import GoogleProvider from "next-auth/providers/google";
+import { MongoDBAdapter } from "@auth/mongodb-adapter";
+import clientPromise from "@/libs/mogoConnect"
 
-const handler = NextAuth({
+export const authOptions = {
   secret: process.env.SECRET,
-  // id:"Credentials",
+  adapter: MongoDBAdapter(clientPromise),
   providers: [
     GoogleProvider({
+      id: "google",
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET
     }),
@@ -33,6 +36,8 @@ const handler = NextAuth({
     })
   ],
 
-})
+}
+
+const handler = NextAuth(authOptions)
 
 export { handler as GET, handler as POST }
