@@ -46,16 +46,25 @@ export default function PrifilePage() {
     }
   }
 
+
+
   async function handleFileChange(e) {
     const files = e.target.files
     if (files?.length === 1) {
-      const data = new FormData
-      data.set("file", files[0])
-      const response = await fetch("/api/upload", {
-        method: 'POST',
-        body: data
-      })
-      console.log(response);
+      const file = files[0]
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        const base64DataUri = e.target.result;
+        const data = new FormData()
+        data.set("file", base64DataUri)
+        const response = await fetch("/api/upload", {
+          method: 'POST',
+          body: data
+        })
+        console.log(response);
+      };
+      reader.readAsDataURL(file);
+
     }
   }
 
