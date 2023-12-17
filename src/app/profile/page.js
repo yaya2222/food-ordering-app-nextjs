@@ -8,6 +8,7 @@ export default function PrifilePage() {
   const session = useSession()
   const { status } = session
   const [userName, setUserName] = useState(" ")
+  const [image, setImage] = useState("")
   const [isSaveing, setIsSaveing] = useState(false)
   const [saved, setSaved] = useState(false)
   const [errorSave, setErrorSave] = useState(false)
@@ -15,6 +16,7 @@ export default function PrifilePage() {
   useEffect(() => {
     if (status === "authenticated") {
       setUserName(session.data.user.name)
+      setImage(session.data.user.image)
     }
   }, [session, status])
 
@@ -27,8 +29,6 @@ export default function PrifilePage() {
     // return redirect("/login")
   }
 
-  const userImage = session.data.user.image
-
   async function handleProfileInfoUpdate(e) {
     e.preventDefault()
     setIsSaveing(true)
@@ -36,7 +36,7 @@ export default function PrifilePage() {
     const response = await fetch("/api/profile", {
       method: 'PUT',
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: userName })
+      body: JSON.stringify({ name: userName,image })
     })
     setIsSaveing(false)
     if (response.ok) {
@@ -61,7 +61,8 @@ export default function PrifilePage() {
           method: 'POST',
           body: data
         })
-        console.log(response);
+        const link = await response.json()
+        setImage(link)
       };
       reader.readAsDataURL(file);
 
@@ -77,8 +78,8 @@ export default function PrifilePage() {
         {errorSave && <h2 className='text-center bg-red-100 p-4 rounded-lg border border-red-300'>Error save!</h2>}
         <div className='flex gap-4 items-center'>
           <div>
-            <div className='p-2 rounded-lg relative'>
-              <Image src={userImage} alt='Avatar' height={250} width={250} className='rounded-lg w-full h-full mb-1' />
+            <div className='p-2 rounded-lg relative max-w-[120px]'>
+              {image && <Image src={image} alt='Avatar' height={250} width={250} className='rounded-lg w-full h-full mb-1' />}
               <label>
                 <input type='file' className='hidden' onChange={handleFileChange} />
                 <span className='block border border-gray-300 rounded-lg p-2 text-center cursor-pointer'>Edit</span>
